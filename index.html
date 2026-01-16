@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IASD Vila Eduardo</title>
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-gradient-1: #f4f6f8;
+            --bg-gradient-2: #e8edf2;
+            --container-bg: #ffffff;
+            --text-primary: #000000;
+            --text-secondary: #555;
+            --text-tertiary: #666;
+            --text-footer: #888;
+            --shadow: rgba(0, 0, 0, 0.12);
+            --button-bg: #ffffff;
+            --button-border: #ddd;
+        }
+
+        html.dark-theme {
+            --bg-gradient-1: #0f0f0f;
+            --bg-gradient-2: #1a1a1a;
+            --container-bg: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-tertiary: #b0b0b0;
+            --text-footer: #888888;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --button-bg: #2a2a2a;
+            --button-border: #444;
+        }
+
+        /* ========== MODO SÁBADO ADVENTISTA ==========*/
+        html.sabbath-mode {
+            --bg-gradient-1: #f5f3f0;
+            --bg-gradient-2: #ede8e2;
+            --container-bg: #faf8f5;
+            --text-primary: #3d3d3d;
+            --text-secondary: #6b6b6b;
+            --text-tertiary: #7a7a7a;
+            --text-footer: #999;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --button-bg: #faf8f5;
+            --button-border: #e5ddd3;
+        }
+
+        html.sabbath-mode.dark-theme {
+            --bg-gradient-1: #1a1814;
+            --bg-gradient-2: #221f1a;
+            --container-bg: #2a2620;
+            --text-primary: #e8e5e0;
+            --text-secondary: #d0ccc5;
+            --text-tertiary: #c0bbb3;
+            --text-footer: #a0a09a;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --button-bg: #2a2620;
+            --button-border: #4a4438;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--button-bg);
+            border: 2px solid var(--button-border);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--shadow);
+            z-index: 1000;
+            padding-top: 2px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.92);
+        }
+
+        .theme-toggle:focus {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+
+        .theme-toggle-label {
+            display: none;
+            font-size: 10px;
+            color: var(--text-primary);
+            margin-top: 4px;
+            font-weight: 600;
+            white-space: nowrap;
+            position: absolute;
+            top: 82px;
+            right: 0;
+            background: var(--button-bg);
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--button-border);
+            box-shadow: 0 2px 6px var(--shadow);
+        }
+
+        .theme-toggle:hover .theme-toggle-label {
+            display: block;
+        }
+
+        .container {
+            background: var(--container-bg);
+            width: 92%;
+            max-width: 520px;
+            padding: 25px 22px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px var(--shadow);
+            text-align: center;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .logo {
+            width: 290px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 5px 0;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-size: 15px;
+            font-weight: normal;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .welcome-message {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .bible-verse {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.02), rgba(0,0,0,0.05));
+            border-left: 3px solid #6366f1;
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
+        html.dark-theme .bible-verse {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08));
+        }
+
+        /* ========== ANIMAÇÕES E TRANSIÇÕES ==========*/
+        /* Respeitar preferência de movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Keyframes de animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+            }
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes breatheSlow {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
+        }
+
+        @keyframes spinIcon {
+            from {
+                transform: rotate(0deg) scale(1);
+            }
+            to {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glowIcon {
+            0%, 100% {
+                text-shadow: none;
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(248, 93, 4, 0.6);
+            }
+        }
+
+        @keyframes glowIconPurple {
+            0%, 100% {
+                text-shadow: none;
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(106, 4, 240, 0.6);
+            }
+        }
+
+        @keyframes glowIconGreen {
+            0%, 100% {
+                text-shadow: none;
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(8, 236, 95, 0.6);
+            }
+        }
+
+        /* Classes de animação para elementos */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.7s ease-out forwards;
+        }
+
+        .zoom-in {
+            animation: zoomIn 0.6s ease-out forwards;
+        }
+
+        /* Delay para animação em cascata */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Logo com animação de entrada */
+        .logo {
+            animation: zoomIn 0.8s ease-out;
+        }
+
+        /* Efeito ripple para botões */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: rippleEffect 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* ========== ESTILOS ESPECÍFICOS DO MODO SÁBADO ==========*/
+        html.sabbath-mode .welcome-message {
+            animation: fadeIn 2s ease-in-out forwards, breatheSlow 4s ease-in-out 2s infinite;
+        }
+
+        html.sabbath-mode .bible-verse {
+            animation: slideUp 1.2s ease-out;
+            opacity: 1 !important;
+        }
+
+        html.sabbath-mode a.link {
+            transition: all 0.5s ease-in-out;
+        }
+
+        html.sabbath-mode a.link:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        html.sabbath-mode a.btn-primary,
+        html.sabbath-mode a.btn-secondary {
+            transition: all 0.5s ease-in-out;
+        }
+
+        html.sabbath-mode a.btn-primary:hover,
+        html.sabbath-mode a.btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        html.sabbath-mode .department-block {
+            transition: all 0.6s ease-in-out;
+        }
+
+        html.sabbath-mode .department-block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 18px;
+        }
+
+        a.link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        a.link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        a.link:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        a.link:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        a.link:focus {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+
+        a.link:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .instagram { background: #E1306C; }
+        .instagram-jovens { background: linear-gradient(135deg, #06a9f5, #C13584); }
+        .whatsapp  { background: #25D366; }
+        .android   { background: #458b65; }
+        .ios       { background: #000000; }
+        .youtube   { background: #970404; }
+        .youtube-official { background: #FF0000; }
+        .location  { background: #4285F4; }
+        .prayer    { background: #9C27B0; }
+
+        /* Blocos de Departamentos */
+        .department-block {
+            background: linear-gradient(135deg, var(--button-bg), var(--container-bg));
+            border: 2px solid var(--button-border);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            animation: slideUp 0.7s ease-out forwards;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .department-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .department-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .department-icon img {
+            max-width: 60px;
+            max-height: 60px;
+            width: auto;
+            height: auto;
+        }
+
+        .desbravadores-icon { 
+            color: #f85d04;
+        }
+
+        .desbravadores-icon:hover {
+            animation: spinIcon 0.8s ease-in-out;
+            filter: brightness(1.2);
+        }
+
+        .desbravadores-icon:hover i {
+            animation: glowIcon 1s ease-in-out;
+        }
+
+        .desbravadores-icon:hover img {
+            animation: spinIcon 0.8s ease-in-out;
+        }
+
+        .aventureiros-icon { 
+            color: #6a04f0;
+        }
+
+        .aventureiros-icon:hover {
+            animation: pulseIcon 0.6s ease-in-out;
+            filter: brightness(1.2);
+        }
+
+        .aventureiros-icon:hover i {
+            animation: glowIconPurple 1s ease-in-out;
+        }
+
+        .asa-icon { 
+            color: #08ec5f;
+        }
+
+        .asa-icon:hover {
+            animation: bounceIcon 0.6s ease-in-out;
+            filter: brightness(1.2);
+        }
+
+        .asa-icon:hover i {
+            animation: glowIconGreen 1s ease-in-out;
+        }
+
+        .interessados-icon {
+            color: #e74c3c;
+        }
+
+        .interessados-icon:hover {
+            animation: pulseIcon 0.6s ease-in-out;
+            filter: brightness(1.2);
+        }
+
+        .interessados-icon:hover i {
+            animation: glowIconInteressados 1s ease-in-out;
+        }
+
+        @keyframes glowIconInteressados {
+            0%, 100% {
+                text-shadow: none;
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+            }
+        }
+
+        .department-block h3 {
+            font-size: 18px;
+            margin: 10px 0 12px 0;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .department-block p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        a.btn-primary, a.btn-secondary {
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        a.btn-primary::before, a.btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        a.btn-primary:hover, a.btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        a.btn-primary:focus, a.btn-secondary:focus {
+            outline: 2px solid currentColor;
+            outline-offset: 2px;
+        }
+
+        a.btn-primary:active, a.btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        a.btn-primary:active::before, a.btn-secondary:active::before {
+            width: 250px;
+            height: 250px;
+        }
+
+        a.btn-primary:hover, a.btn-secondary:hover {
+            transform: scale(1.02);
+            opacity: 0.95;
+        }
+
+        a.btn-primary {
+            background: #f85d04;
+        }
+
+        a.btn-primary.aventureiros {
+            background: #6a04f0;
+        }
+
+        a.btn-primary.asa {
+            background: #08ec5f;
+        }
+
+        a.btn-primary.interessados {
+            background: #e74c3c;
+        }
+
+        a.btn-secondary.interessados {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        a.btn-secondary {
+            background: var(--button-bg);
+            border: 2px solid #f85d04;
+            color: #ee5a05;
+        }
+
+        a.btn-secondary.aventureiros {
+            border-color: #6a04f0;
+            color: #6a04f0;
+        }
+
+        a.btn-secondary.asa {
+            border-color: #08ec5f;
+            color: #08ec5f;
+        }
+
+        @media (max-width: 480px) {
+            .department-block {
+                padding: 18px;
+                margin: 16px 0;
+            }
+
+            .department-icon {
+                font-size: 40px;
+                height: 50px;
+            }
+
+            .department-block h3 {
+                font-size: 16px;
+            }
+
+            .department-block p {
+                font-size: 12px;
+            }
+        }
+
+        .map-container {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            display: none;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 320px;
+            border: none;
+            display: none;
+        }
+
+        .map-label {
+            display: none;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-footer);
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                width: 52px;
+                height: 52px;
+                font-size: 20px;
+                top: 12px;
+                right: 12px;
+            }
+
+            .theme-toggle-label {
+                font-size: 9px;
+                top: 68px;
+            }
+
+            .container {
+                padding: 20px 18px;
+                margin-bottom: 10px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            h2 {
+                font-size: 14px;
+            }
+
+            .welcome-message {
+                font-size: 15px;
+            }
+
+            .bible-verse {
+                font-size: 12px;
+            }
+
+            .department-block {
+                padding: 18px;
+                margin: 16px 0;
+            }
+
+            .department-icon {
+                font-size: 40px;
+                height: 50px;
+            }
+
+            .department-block h3 {
+                font-size: 16px;
+            }
+
+            .department-block p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão para alternar tema -->
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+        <i class="fas fa-moon"></i>
+        <span class="theme-toggle-label" id="themeLabelToggle">Modo escuro</span>
+    </button>
+
+    <div class="container">
+
+        <!-- LOGO IASD -->
+        <img class="logo" 
+             src="https://raw.githubusercontent.com/britogabriel12/iasd/refs/heads/main/Igreja_Adventista_Dia.svg.png" 
+             alt="Igreja Adventista do Sétimo Dia">
+
+        <h1>IASD Vila Eduardo</h1>
+        <h2>Igreja Adventista do Sétimo Dia</h2>
+
+        <!-- MENSAGEM DINÂMICA DE BOAS-VINDAS -->
+        <div class="welcome-message" id="welcomeMessage">
+            Bem-vindo!
+        </div>
+
+        <!-- VERSO BÍBLICO ROTATIVO -->
+        <div class="bible-verse" id="bibleVerse">
+            "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." — João 3:16
+        </div>
+
+        <p>
+             Seja bem-vindo! Venha conhecer a Igreja Adventista do Sétimo Dia – Vila Eduardo.
+Conecte-se aos nossos canais e venha participar conosco.
+        </p>
+
+        <!-- INSTAGRAM INSTITUCIONAL -->
+        <a class="link instagram" href="https://www.instagram.com/iasdvilaeduardo" target="_blank">
+            <i class="fab fa-instagram"></i> Instagram Oficial - @iasdvilaeduardo
+        </a>
+
+        <!-- INSTAGRAM JOVENS -->
+        <a class="link instagram-jovens" href="https://www.instagram.com/jovens_ve" target="_blank">
+            <i class="fab fa-instagram"></i> Instagram Ministério Jovem - @jovens_ve
+        </a>
+
+        <!-- YOUTUBE -->
+        <a class="link youtube-official" href="https://www.youtube.com/@iasdvilaeduardo" target="_blank">
+            <i class="fab fa-youtube"></i> YouTube - Cultos ao vivo
+        </a>
+
+        <!-- LOCALIZAÇÃO - COMO CHEGAR -->
+        <a class="link location" href="https://maps.app.goo.gl/DUvuHEB5QrCCy7pg6" target="_blank">
+            <i class="fas fa-map-location-dot"></i> Como chegar na IASD Vila Eduardo?
+        </a>
+
+        <!-- PEDIDO DE ORAÇÃO -->
+        <a class="link prayer" href="https://docs.google.com/forms/d/e/1FAIpQLSfxJ1zERYx-LDJ_Z7F_1FSOq9HuhE4L1eIFQt_JY7SWm8-zTA/viewform?usp=publish-editor" target="_blank">
+            <i class="fas fa-hands-praying"></i> Pedido de Oração
+        </a>
+
+        <!-- WHATSAPP PASTORAL -->
+        <a class="link whatsapp" href="https://wa.me/558197013938" target="_blank">
+            <i class="fab fa-whatsapp"></i> WhatsApp Pastoral – IASD Vila Eduardo
+        </a>
+
+        <!-- 7ME ANDROID -->
+        <a class="link android" href="https://play.google.com/store/apps/details?id=com.iatec.acms.me&pcampaignid=web_share" target="_blank">
+            <i class="fab fa-android"></i> 7Me – Android
+        </a>
+
+        <!-- 7ME IOS -->
+        <a class="link ios" href="https://apps.apple.com/br/app/7me/id1344775660" target="_blank">
+            <i class="fab fa-apple"></i> 7Me – iPhone (iOS)
+        </a>
+
+        <!-- APRENDA A DIZIMAR E OFERTAR -->
+        <a class="link youtube" href="https://www.youtube.com/watch?v=TAvHXXeeRrU" target="_blank">
+            <i class="fab fa-youtube"></i> Aprenda a dizimar e Ofertar pelo 7Me
+        </a>
+
+        <!-- SEÇÃO DE DEPARTAMENTOS -->
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid var(--button-border);">
+
+        <!-- CLUBE DE DESBRAVADORES -->
+        <div class="department-block">
+            <span class="department-icon desbravadores-icon">
+                <img src="https://github.com/britogabriel12/iasd/blob/main/Logo%20Desbravadores.png?raw=true" alt="Logo Desbravadores" style="width: 60px; height: 60px; object-fit: contain;">
+            </span>
+            <h3>Clube de Desbravadores</h3>
+            <p>
+                Desenvolvimento integral de crianças e adolescentes através de atividades educacionais, 
+                espirituais e recreativas. Venha fazer parte desta grande família!
+            </p>
+            <div class="button-group">
+                <a class="btn-primary" href="https://wa.me/5587988779496" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero fazer parte dos Desbravadores
+                </a>
+                <a class="btn-secondary" href="https://www.youtube.com/watch?v=BMSVGjp_8Zs&pp=ygUbaGlzdMOzcmlhIGRvcyBkZXNicmF2YWRvcmVz" target="_blank">
+                    <i class="fab fa-youtube"></i> Conheça a história dos Desbravadores
+                </a>
+                <a class="btn-secondary" href="https://www.instagram.com/cluberaizesdosertao" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram – Raízes do Sertão
+                </a>
+            </div>
+        </div>
+
+        <!-- CLUBE DE AVENTUREIROS -->
+        <div class="department-block">
+            <span class="department-icon aventureiros-icon">
+                <img src="https://github.com/britogabriel12/iasd/blob/main/Logo%20Aventureiros.png?raw=true" alt="Logo Aventureiros" style="width: 60px; height: 60px; object-fit: contain;">
+            </span>
+            <h3>Clube de Aventureiros</h3>
+            <p>
+                Programa especial para crianças menores, focado em aprendizagem, diversão e crescimento espiritual. 
+                Pais, tragam seus filhos para esta jornada inesquecível!
+            </p>
+            <div class="button-group">
+                <a class="btn-primary aventureiros" href="https://wa.me/5587988574513" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero fazer parte dos Aventureiros
+                </a>
+                <a class="btn-secondary aventureiros" href="https://www.youtube.com/watch?v=cGTOP7pCxCw&pp=ygUfY2x1YmUgZGUgYXZlbnR1cmVpcm9zIGhpc3TDs3JpYQ%3D%3D" target="_blank">
+                    <i class="fab fa-youtube"></i> Conheça a história dos Aventureiros
+                </a>
+                <a class="btn-secondary aventureiros" href="https://www.instagram.com/clubemontecastelinho" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram – Monte Castelinho
+                </a>
+            </div>
+        </div>
+
+        <!-- AÇÃO SOLIDÁRIA ADVENTISTA -->
+        <div class="department-block">
+            <span class="department-icon asa-icon">
+                <img src="https://github.com/britogabriel12/iasd/blob/main/ADRA%20Horizontal%20Logo.png?raw=true" alt="Logo ADRA" style="width: 60px; height: 60px; object-fit: contain;">
+            </span>
+            <h3>Ação Solidária Adventista – ASA</h3>
+            <p>
+                Serviço cristão dedicado ao apoio de famílias necessitadas e à transformação social de nossa comunidade. 
+                Sua contribuição faz diferença!
+            </p>
+            <div class="button-group">
+                <a class="btn-primary asa" href="https://wa.me/5587988173638" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero doar para a ASA
+                </a>
+                <a class="btn-secondary asa" href="https://www.instagram.com/acaosolidaria.ve" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram – ASA Vila Eduardo
+                </a>
+            </div>
+        </div>
+
+        <!-- MINISTÉRIO DOS INTERESSADOS -->
+        <div class="department-block">
+            <span class="department-icon interessados-icon">
+                <i class="fas fa-heart"></i>
+            </span>
+            <h3>Ministério dos Interessados</h3>
+            <p>
+                Está conhecendo a Igreja Adventista do Sétimo Dia ou visitando pela primeira vez? 
+                O Ministério dos Interessados existe para caminhar com você, tirar dúvidas, ouvir sua história 
+                e ajudar no seu crescimento espiritual, sempre com respeito, carinho e atenção.
+            </p>
+            <div class="button-group">
+                <a class="btn-primary interessados" href="https://wa.me/558791128283" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero conversar / receber acompanhamento
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            "Cada um contribua segundo o que propôs no seu coração."
+        </footer>
+
+    </div>
+
+    <script>
+        // Inicializar tema ao carregar a página
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark-theme');
+            }
+            
+            updateThemeIcon();
+        }
+
+        // Atualizar ícone do tema
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeToggle').querySelector('i');
+            const label = document.getElementById('themeLabelToggle');
+            const isDark = document.documentElement.classList.contains('dark-theme');
+            
+            if (isDark) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                label.textContent = 'Modo claro';
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                label.textContent = 'Modo escuro';
+            }
+        }
+
+        // Event listener para o botão
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon();
+        });
+
+        // Inicializar tema ao carregar
+        initTheme();
+
+        // ========== DETECÇÃO DO SÁBADO ADVENTISTA ==========
+        function detectSabbath() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = domingo, 5 = sexta, 6 = sábado
+            const hour = now.getHours();
+            
+            // Sábado adventista: sexta-feira após 18h até sábado às 18h
+            const isSabbath = (day === 5 && hour >= 18) || (day === 6 && hour < 18);
+            
+            return isSabbath;
+        }
+
+        // Aplicar modo sábado se necessário
+        if (detectSabbath()) {
+            document.documentElement.classList.add('sabbath-mode');
+        }
+
+        // ========== MENSAGEM DINÂMICA DE BOAS-VINDAS ==========
+        function updateWelcomeMessage() {
+            const hour = new Date().getHours();
+            const day = new Date().getDay();
+            const dayNames = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+            
+            let greeting = '';
+            let timeOfDay = '';
+
+            // Mensagem conforme horário
+            if (hour < 12) {
+                timeOfDay = 'Bom dia';
+            } else if (hour < 18) {
+                timeOfDay = 'Boa tarde';
+            } else {
+                timeOfDay = 'Boa noite';
+            }
+
+            // Mensagem conforme dia da semana
+            const dayGreeting = `${timeOfDay}! Que alegria ter você conosco nesta ${dayNames[day]}!`;
+            
+            document.getElementById('welcomeMessage').textContent = dayGreeting;
+        }
+
+        // ========== VERSO BÍBLICO ROTATIVO ==========
+        function getRandomBibleVerse() {
+            const verses = [
+                '"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." — João 3:16',
+                '"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei." — Mateus 11:28',
+                '"Porque, na verdade, vos digo que, se tiverdes fé como um grão de mostarda, direis a este monte: Passa daqui para acolá, e há de passar; e nada vos será impossível." — Mateus 17:20',
+                '"O Senhor é a minha luz e a minha salvação; a quem terei medo?" — Salmo 27:1',
+                '"Confiai no Senhor de todo o vosso coração, e não vos apoieis na vossa inteligência." — Provérbios 3:5',
+                '"Porque eu bem sei os pensamentos que tenho a vosso respeito, diz o Senhor; pensamentos de paz, e não de mal, para vos dar um fim esperado." — Jeremias 29:11',
+                '"Lançai toda a vossa ansiedade sobre ele, porque ele tem cuidado de vós." — 1 Pedro 5:7',
+                '"A lei do Senhor é perfeita e restaura a alma; o testemunho do Senhor é fiel e dá sabedoria aos simples." — Salmo 19:7',
+                '"Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum de seus benefícios." — Salmo 103:2',
+                '"Tudo posso fazer em Cristo, que me fortalece." — Filipenses 4:13',
+                '"Mas aos que receberam, deu-lhes o poder de serem feitos filhos de Deus." — João 1:12',
+                '"Se confessarmos os nossos pecados, ele é fiel e justo para nos perdoar os pecados e nos purificar de toda a injustiça." — 1 João 1:9'
+            ];
+            
+            return verses[Math.floor(Math.random() * verses.length)];
+        }
+
+        // Chamar funções de conteúdo dinâmico
+        updateWelcomeMessage();
+        document.getElementById('bibleVerse').textContent = getRandomBibleVerse();
+
+        // ========== ANIMAÇÕES DE SCROLL ==========
+        // Observador de intersecção para ativar animações ao scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Adicionar classe de animação com delay
+                    entry.target.classList.add('slide-up');
+                    
+                    // Adicionar delay para efeito em cascata
+                    if (entry.target.classList.contains('department-block')) {
+                        const delayClass = `delay-${(index % 4) + 1}`;
+                        entry.target.classList.add(delayClass);
+                    }
+                    
+                    // Remover do observador para não animar novamente
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos os blocos de departamento e links
+        document.querySelectorAll('.department-block').forEach((block, index) => {
+            block.style.opacity = '0';
+            observer.observe(block);
+        });
+
+        // ========== ANIMAÇÃO FADE-IN PARA LINKS ==========
+        const links = document.querySelectorAll('a.link');
+        links.forEach((link, index) => {
+            link.classList.add('fade-in');
+            link.style.animationDelay = `${0.05 + (index * 0.05)}s`;
+        });
+
+        // ========== INTERATIVIDADE MELHORADA ==========
+        // Adicionar feedback visual ao clicar em botões
+        document.querySelectorAll('a.link, a.btn-primary, a.btn-secondary').forEach(button => {
+            button.addEventListener('mousedown', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+</body>
+</html>
