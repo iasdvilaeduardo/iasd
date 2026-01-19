@@ -714,6 +714,36 @@
             gap: 14px;
         }
 
+        .schedule-countdown {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 4px 0 12px;
+            text-align: left;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            cursor: pointer;
+        }
+
+        .schedule-countdown::before {
+            content: '\f017';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: #6366f1;
+        }
+
+        .schedule-countdown:hover {
+            background: rgba(99, 102, 241, 0.09);
+            border-color: rgba(99, 102, 241, 0.32);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
         .schedule-card {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f7fa 100%);
             border-radius: 12px;
@@ -733,6 +763,12 @@
         .schedule-card:focus-within {
             transform: translateY(-3px);
             box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .schedule-card.is-next-event {
+            border: 2px solid #6366f1;
+            box-shadow: 0 10px 24px rgba(99, 102, 241, 0.18);
+            transform: translateY(-4px);
         }
 
         .schedule-card:focus-visible {
@@ -769,18 +805,21 @@
         }
 
         .schedule-day {
-            font-size: 15px;
-            font-weight: 600;
-            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 2px;
             color: var(--text-primary);
+            letter-spacing: 0.01em;
         }
 
         .schedule-time {
-            font-size: 19px;
-            font-weight: 700;
-            margin: 2px 0 4px;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 6px;
             color: #0277bd;
-            font-family: 'Courier New', monospace;
+            padding: 2px 10px;
+            border-radius: 999px;
+            background: rgba(2, 119, 189, 0.06);
         }
 
         .schedule-text {
@@ -926,8 +965,9 @@
         <!-- HORÁRIOS DE CULTO E PG -->
         <section class="schedule-section" aria-labelledby="scheduleTitle">
             <h3 id="scheduleTitle" class="schedule-title">Horários de Culto e PG</h3>
+            <p id="nextEventCountdown" class="schedule-countdown">Carregando próximo encontro...</p>
             <div class="schedule-grid">
-                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Domingo às 19h30">
+                <div class="schedule-card" data-day="Domingo" tabindex="0" role="button" aria-label="Horário do culto de Domingo às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Domingo</p>
@@ -936,7 +976,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Quarta-feira às 19h30">
+                <div class="schedule-card" data-day="Quarta-feira" tabindex="0" role="button" aria-label="Horário do culto de Quarta-feira às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Quarta-feira</p>
@@ -945,7 +985,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do Pequeno Grupo na sexta-feira às 19h30">
+                <div class="schedule-card" data-day="Sexta-feira (PG)" tabindex="0" role="button" aria-label="Horário do Pequeno Grupo na sexta-feira às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>👥</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Sexta-feira (PG)</p>
@@ -954,7 +994,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Sábado às 08h45">
+                <div class="schedule-card" data-day="Sábado" tabindex="0" role="button" aria-label="Horário do culto de Sábado às 08h45">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Sábado</p>
@@ -1170,28 +1210,10 @@ Conecte-se aos nossos canais e venha participar conosco.
             document.documentElement.classList.add('sabbath-mode');
         }
 
-        // ========== MENSAGEM DINÂMICA DE BOAS-VINDAS ==========
+        // ========== MENSAGEM DE BOAS-VINDAS ==========
         function updateWelcomeMessage() {
-            const hour = new Date().getHours();
-            const day = new Date().getDay();
-            const dayNames = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-            
-            let greeting = '';
-            let timeOfDay = '';
-
-            // Mensagem conforme horário
-            if (hour < 12) {
-                timeOfDay = 'Bom dia';
-            } else if (hour < 18) {
-                timeOfDay = 'Boa tarde';
-            } else {
-                timeOfDay = 'Boa noite';
-            }
-
-            // Mensagem conforme dia da semana
-            const dayGreeting = `${timeOfDay}! Que alegria ter você conosco nesta ${dayNames[day]}!`;
-            
-            document.getElementById('welcomeMessage').textContent = dayGreeting;
+            const message = 'Que bom ter você aqui! Seja muito bem-vindo à IASD Vila Eduardo.';
+            document.getElementById('welcomeMessage').textContent = message;
         }
 
         // ========== VERSO BÍBLICO ROTATIVO ==========
@@ -1223,9 +1245,108 @@ Conecte-se aos nossos canais e venha participar conosco.
             return pool[Math.floor(Math.random() * pool.length)];
         }
 
+        // ========== PRÓXIMO EVENTO (CONTAGEM REGRESSIVA) ==========
+        const churchEvents = [
+            { day: 0, hour: 19, minute: 30, labelDay: 'Domingo', labelTime: '19h30', type: 'culto' },
+            { day: 3, hour: 19, minute: 30, labelDay: 'Quarta-feira', labelTime: '19h30', type: 'culto' },
+            { day: 5, hour: 19, minute: 30, labelDay: 'Sexta-feira (PG)', labelTime: '19h30', type: 'PG' },
+            { day: 6, hour: 8, minute: 45, labelDay: 'Sábado', labelTime: '08h45', type: 'culto' }
+        ];
+
+        function getNextEventInfo() {
+            const now = new Date();
+            let nextEvent = null;
+
+            churchEvents.forEach(event => {
+                const candidate = new Date(now);
+                const diffToEventDay = (event.day - candidate.getDay() + 7) % 7;
+                candidate.setDate(candidate.getDate() + diffToEventDay);
+                candidate.setHours(event.hour, event.minute, 0, 0);
+
+                if (candidate <= now) {
+                    candidate.setDate(candidate.getDate() + 7);
+                }
+
+                if (!nextEvent || candidate < nextEvent.date) {
+                    nextEvent = { ...event, date: candidate };
+                }
+            });
+
+            return nextEvent;
+        }
+
+        function formatTimeDiff(ms) {
+            if (ms <= 0) {
+                return 'é agora!';
+            }
+
+            const totalSeconds = Math.floor(ms / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            const parts = [];
+            if (days > 0) parts.push(days + ' dia' + (days > 1 ? 's' : ''));
+            if (hours > 0) parts.push(hours + 'h');
+            if (minutes > 0 && days === 0) parts.push(minutes + 'min');
+            if (days === 0 && hours === 0) parts.push(seconds + 's');
+
+            return parts.join(' ');
+        }
+
+        function updateNextEventCountdown() {
+            const el = document.getElementById('nextEventCountdown');
+            if (!el) return;
+
+            const next = getNextEventInfo();
+            if (!next) {
+                el.textContent = '';
+                return;
+            }
+
+            const now = new Date();
+            const diff = next.date - now;
+            const diffText = formatTimeDiff(diff);
+
+            const typeLabel = next.type === 'PG' ? 'Próximo PG' : 'Próximo Culto';
+            el.textContent = `${typeLabel}: ${next.labelDay} • ${next.labelTime} — faltam ${diffText}`;
+
+            // Destacar o cartão correspondente ao próximo evento
+            document.querySelectorAll('.schedule-card').forEach(card => {
+                card.classList.remove('is-next-event');
+            });
+
+            const nextCard = document.querySelector(`.schedule-card[data-day="${next.labelDay}"]`);
+            if (nextCard) {
+                nextCard.classList.add('is-next-event');
+            }
+        }
+
+        function initNextEventCountdown() {
+            updateNextEventCountdown();
+            setInterval(updateNextEventCountdown, 1000);
+        }
+
         // Chamar funções de conteúdo dinâmico
         updateWelcomeMessage();
         document.getElementById('bibleVerse').textContent = getRandomBibleVerse();
+        initNextEventCountdown();
+
+        // Deixar a contagem interativa: ao clicar, focar o próximo evento
+        const countdownEl = document.getElementById('nextEventCountdown');
+        if (countdownEl) {
+            countdownEl.addEventListener('click', () => {
+                const next = getNextEventInfo();
+                if (!next) return;
+
+                const nextCard = document.querySelector(`.schedule-card[data-day="${next.labelDay}"]`);
+                if (nextCard) {
+                    nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    nextCard.focus({ preventScroll: true });
+                }
+            });
+        }
 
         // ========== ANIMAÇÕES DE SCROLL ==========
         // Observador de intersecção para ativar animações ao scroll
