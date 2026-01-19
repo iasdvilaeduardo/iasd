@@ -693,12 +693,16 @@
 
         /* Seção de horários de culto e PG */
         .schedule-section {
-            margin: 24px 0 28px;
+            margin: 24px 0 20px;
+            padding: 16px 14px;
+            border-radius: 14px;
+            border-left: 3px solid #6366f1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(15, 118, 110, 0.02));
         }
 
         .schedule-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 16px;
             text-align: left;
@@ -722,13 +726,37 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            animation: slideUp 0.7s ease-out, breatheSlow 6s ease-in-out infinite;
+            animation: slideUp 0.7s ease-out;
         }
 
         .schedule-card:hover,
         .schedule-card:focus-within {
             transform: translateY(-3px);
             box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .schedule-card:focus-visible {
+            outline: 2px solid #6366f1;
+            outline-offset: 3px;
+        }
+
+        .schedule-card::after {
+            content: 'Clique e participe conosco';
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+        }
+
+        .schedule-card:hover::after,
+        .schedule-card:focus-visible::after {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .schedule-icon span {
@@ -762,6 +790,13 @@
             line-height: 1.4;
         }
 
+        .schedule-invite {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin: 6px 0 18px;
+            text-align: left;
+        }
+
         html.dark-theme .schedule-card {
             background: linear-gradient(135deg, #102a43 0%, #0b1924 100%);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
@@ -773,6 +808,7 @@
 
         html.sabbath-mode .schedule-card {
             background: linear-gradient(135deg, #f5ede5 0%, #faf6f0 100%);
+            animation: slideUp 0.7s ease-out, breatheSlow 6s ease-in-out infinite;
         }
 
         html.sabbath-mode .schedule-time {
@@ -862,7 +898,7 @@
 </head>
 <body>
     <!-- Botão para alternar tema -->
-    <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema" aria-label="Alternar tema claro/escuro">
         <i class="fas fa-moon"></i>
         <span class="theme-toggle-label" id="themeLabelToggle">Modo escuro</span>
     </button>
@@ -891,7 +927,7 @@
         <section class="schedule-section" aria-labelledby="scheduleTitle">
             <h3 id="scheduleTitle" class="schedule-title">Horários de Culto e PG</h3>
             <div class="schedule-grid">
-                <div class="schedule-card">
+                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Domingo às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Domingo</p>
@@ -900,7 +936,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card">
+                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Quarta-feira às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Quarta-feira</p>
@@ -909,7 +945,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card">
+                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do Pequeno Grupo na sexta-feira às 19h30">
                     <div class="schedule-icon" aria-hidden="true"><span>👥</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Sexta-feira (PG)</p>
@@ -918,7 +954,7 @@
                     </div>
                 </div>
 
-                <div class="schedule-card">
+                <div class="schedule-card" tabindex="0" role="button" aria-label="Horário do culto de Sábado às 08h45">
                     <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
                     <div class="schedule-info">
                         <p class="schedule-day">Sábado</p>
@@ -928,6 +964,10 @@
                 </div>
             </div>
         </section>
+
+        <p class="schedule-invite">
+            Escolha um desses horários e venha viver esse momento com a gente aqui na IASD Vila Eduardo.
+        </p>
 
         <p>
              Seja bem-vindo! Venha conhecer a Igreja Adventista do Sétimo Dia – Vila Eduardo.
@@ -982,25 +1022,20 @@ Conecte-se aos nossos canais e venha participar conosco.
         <!-- SEÇÃO DE DEPARTAMENTOS -->
         <hr style="margin: 30px 0; border: none; border-top: 1px solid var(--button-border);">
 
-        <!-- CLUBE DE DESBRAVADORES -->
+        <!-- MINISTÉRIO DOS INTERESSADOS -->
         <div class="department-block">
-            <span class="department-icon desbravadores-icon">
-                <img src="https://github.com/britogabriel12/iasd/blob/main/Logo%20Desbravadores.png?raw=true" alt="Logo Desbravadores" style="width: 60px; height: 60px; object-fit: contain;">
+            <span class="department-icon interessados-icon">
+                <img src="https://github.com/iasdvilaeduardo/iasd/blob/main/logotipo-fiel-a-toda-prova.png?raw=true" alt="Logo Ministério dos Interessados" style="width: 60px; height: 60px; object-fit: contain;">
             </span>
-            <h3>Clube de Desbravadores</h3>
+            <h3>Ministério dos Interessados</h3>
             <p>
-                Desenvolvimento integral de crianças e adolescentes através de atividades educacionais, 
-                espirituais e recreativas. Venha fazer parte desta grande família!
+                Está conhecendo a Igreja Adventista do Sétimo Dia ou visitando pela primeira vez? 
+                O Ministério dos Interessados existe para caminhar com você, tirar dúvidas, ouvir sua história 
+                e ajudar no seu crescimento espiritual, sempre com respeito, carinho e atenção.
             </p>
             <div class="button-group">
-                <a class="btn-primary" href="https://wa.me/5587988779496" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Quero fazer parte dos Desbravadores
-                </a>
-                <a class="btn-secondary" href="https://www.youtube.com/watch?v=BMSVGjp_8Zs&pp=ygUbaGlzdMOzcmlhIGRvcyBkZXNicmF2YWRvcmVz" target="_blank">
-                    <i class="fab fa-youtube"></i> Conheça a história dos Desbravadores
-                </a>
-                <a class="btn-secondary" href="https://www.instagram.com/cluberaizesdosertao" target="_blank">
-                    <i class="fab fa-instagram"></i> Instagram – Raízes do Sertão
+                <a class="btn-primary interessados" href="https://wa.me/558791128283" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero conversar / receber acompanhamento
                 </a>
             </div>
         </div>
@@ -1048,20 +1083,25 @@ Conecte-se aos nossos canais e venha participar conosco.
             </div>
         </div>
 
-        <!-- MINISTÉRIO DOS INTERESSADOS -->
+        <!-- CLUBE DE DESBRAVADORES -->
         <div class="department-block">
-            <span class="department-icon interessados-icon">
-                <img src="https://github.com/iasdvilaeduardo/iasd/blob/main/logotipo-fiel-a-toda-prova.png?raw=true" alt="Logo Ministério dos Interessados" style="width: 60px; height: 60px; object-fit: contain;">
+            <span class="department-icon desbravadores-icon">
+                <img src="https://github.com/britogabriel12/iasd/blob/main/Logo%20Desbravadores.png?raw=true" alt="Logo Desbravadores" style="width: 60px; height: 60px; object-fit: contain;">
             </span>
-            <h3>Ministério dos Interessados</h3>
+            <h3>Clube de Desbravadores</h3>
             <p>
-                Está conhecendo a Igreja Adventista do Sétimo Dia ou visitando pela primeira vez? 
-                O Ministério dos Interessados existe para caminhar com você, tirar dúvidas, ouvir sua história 
-                e ajudar no seu crescimento espiritual, sempre com respeito, carinho e atenção.
+                Desenvolvimento integral de crianças e adolescentes através de atividades educacionais, 
+                espirituais e recreativas. Venha fazer parte desta grande família!
             </p>
             <div class="button-group">
-                <a class="btn-primary interessados" href="https://wa.me/558791128283" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Quero conversar / receber acompanhamento
+                <a class="btn-primary" href="https://wa.me/5587988779496" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Quero fazer parte dos Desbravadores
+                </a>
+                <a class="btn-secondary" href="https://www.youtube.com/watch?v=BMSVGjp_8Zs&pp=ygUbaGlzdMOzcmlhIGRvcyBkZXNicmF2YWRvcmVz" target="_blank">
+                    <i class="fab fa-youtube"></i> Conheça a história dos Desbravadores
+                </a>
+                <a class="btn-secondary" href="https://www.instagram.com/cluberaizesdosertao" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram – Raízes do Sertão
                 </a>
             </div>
         </div>
@@ -1156,7 +1196,15 @@ Conecte-se aos nossos canais e venha participar conosco.
 
         // ========== VERSO BÍBLICO ROTATIVO ==========
         function getRandomBibleVerse() {
-            const verses = [
+            const sabbathVerses = [
+                '"Lembra-te do dia de sábado, para o santificar." — Êxodo 20:8',
+                '"Porque em seis dias fez o Senhor os céus e a terra, o mar e tudo o que neles há, e ao sétimo dia descansou." — Êxodo 20:11',
+                '"Cheguemos, pois, com confiança ao trono da graça, para que possamos alcançar misericórdia." — Hebreus 4:16',
+                '"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei." — Mateus 11:28',
+                '"Se desviares o teu pé do sábado, de fazer a tua vontade no meu santo dia... então te deleitarás no Senhor." — Isaías 58:13-14'
+            ];
+
+            const regularVerses = [
                 '"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." — João 3:16',
                 '"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei." — Mateus 11:28',
                 '"Porque, na verdade, vos digo que, se tiverdes fé como um grão de mostarda, direis a este monte: Passa daqui para acolá, e há de passar; e nada vos será impossível." — Mateus 17:20',
@@ -1170,8 +1218,9 @@ Conecte-se aos nossos canais e venha participar conosco.
                 '"Mas aos que receberam, deu-lhes o poder de serem feitos filhos de Deus." — João 1:12',
                 '"Se confessarmos os nossos pecados, ele é fiel e justo para nos perdoar os pecados e nos purificar de toda a injustiça." — 1 João 1:9'
             ];
-            
-            return verses[Math.floor(Math.random() * verses.length)];
+
+            const pool = detectSabbath() ? sabbathVerses : regularVerses;
+            return pool[Math.floor(Math.random() * pool.length)];
         }
 
         // Chamar funções de conteúdo dinâmico
@@ -1234,17 +1283,6 @@ Conecte-se aos nossos canais e venha participar conosco.
                 this.appendChild(ripple);
                 
                 setTimeout(() => ripple.remove(), 600);
-            });
-        });
-
-        // Interatividade nos cartões de horários de culto e PG
-        document.querySelectorAll('.schedule-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const day = card.querySelector('.schedule-day')?.textContent || '';
-                const time = card.querySelector('.schedule-time')?.textContent || '';
-                if (day && time) {
-                    alert(`${day} - ${time}\n\nEsperamos você nesse encontro!`);
-                }
             });
         });
     </script>
