@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -691,6 +691,94 @@
             }
         }
 
+        /* Seção de horários de culto e PG */
+        .schedule-section {
+            margin: 24px 0 28px;
+        }
+
+        .schedule-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+        }
+
+        .schedule-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f7fa 100%);
+            border-radius: 12px;
+            padding: 14px 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.7s ease-out, breatheSlow 6s ease-in-out infinite;
+        }
+
+        .schedule-card:hover,
+        .schedule-card:focus-within {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .schedule-icon span {
+            font-size: 26px;
+            line-height: 1;
+        }
+
+        .schedule-info {
+            text-align: left;
+        }
+
+        .schedule-day {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .schedule-time {
+            font-size: 19px;
+            font-weight: 700;
+            margin: 2px 0 4px;
+            color: #0277bd;
+            font-family: 'Courier New', monospace;
+        }
+
+        .schedule-text {
+            font-size: 12px;
+            margin: 0;
+            color: var(--text-tertiary);
+            line-height: 1.4;
+        }
+
+        html.dark-theme .schedule-card {
+            background: linear-gradient(135deg, #102a43 0%, #0b1924 100%);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        html.dark-theme .schedule-time {
+            color: #4fc3f7;
+        }
+
+        html.sabbath-mode .schedule-card {
+            background: linear-gradient(135deg, #f5ede5 0%, #faf6f0 100%);
+        }
+
+        html.sabbath-mode .schedule-time {
+            color: #c97a52;
+        }
+
         .map-container {
             margin: 25px 0;
             border-radius: 12px;
@@ -787,7 +875,7 @@
              alt="Igreja Adventista do Sétimo Dia">
 
         <h1>IASD Vila Eduardo</h1>
-        <h2>Igreja Adventista do Sétimo Dia</h2>
+        
 
         <!-- MENSAGEM DINÂMICA DE BOAS-VINDAS -->
         <div class="welcome-message" id="welcomeMessage">
@@ -798,6 +886,48 @@
         <div class="bible-verse" id="bibleVerse">
             "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna." — João 3:16
         </div>
+
+        <!-- HORÁRIOS DE CULTO E PG -->
+        <section class="schedule-section" aria-labelledby="scheduleTitle">
+            <h3 id="scheduleTitle" class="schedule-title">Horários de Culto e PG</h3>
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
+                    <div class="schedule-info">
+                        <p class="schedule-day">Domingo</p>
+                        <p class="schedule-time">19h30</p>
+                        <p class="schedule-text">Venha começar a semana com esperança.</p>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
+                    <div class="schedule-info">
+                        <p class="schedule-day">Quarta-feira</p>
+                        <p class="schedule-time">19h30</p>
+                        <p class="schedule-text">Momento de oração e fortalecimento espiritual.</p>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-icon" aria-hidden="true"><span>👥</span></div>
+                    <div class="schedule-info">
+                        <p class="schedule-day">Sexta-feira (PG)</p>
+                        <p class="schedule-time">19h30</p>
+                        <p class="schedule-text">Pequenos grupos: amizade, estudo e comunhão.</p>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-icon" aria-hidden="true"><span>⛪</span></div>
+                    <div class="schedule-info">
+                        <p class="schedule-day">Sábado</p>
+                        <p class="schedule-time">08h45</p>
+                        <p class="schedule-text">Escola Sabatina e comunhão com Deus.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <p>
              Seja bem-vindo! Venha conhecer a Igreja Adventista do Sétimo Dia – Vila Eduardo.
@@ -1106,6 +1236,18 @@ Conecte-se aos nossos canais e venha participar conosco.
                 setTimeout(() => ripple.remove(), 600);
             });
         });
+
+        // Interatividade nos cartões de horários de culto e PG
+        document.querySelectorAll('.schedule-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const day = card.querySelector('.schedule-day')?.textContent || '';
+                const time = card.querySelector('.schedule-time')?.textContent || '';
+                if (day && time) {
+                    alert(`${day} - ${time}\n\nEsperamos você nesse encontro!`);
+                }
+            });
+        });
     </script>
 </body>
 </html>
+
