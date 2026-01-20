@@ -776,7 +776,8 @@
             outline-offset: 3px;
         }
 
-        .schedule-card::after {
+        /* Dica visual apenas para o PG */
+        .schedule-card[data-day="Sexta-feira (PG)"]::after {
             content: 'Clique e participe conosco';
             position: absolute;
             right: 10px;
@@ -789,8 +790,8 @@
             pointer-events: none;
         }
 
-        .schedule-card:hover::after,
-        .schedule-card:focus-visible::after {
+        .schedule-card[data-day="Sexta-feira (PG)"]:hover::after,
+        .schedule-card[data-day="Sexta-feira (PG)"]:focus-visible::after {
             opacity: 1;
             transform: translateY(0);
         }
@@ -834,6 +835,49 @@
             color: var(--text-secondary);
             margin: 6px 0 18px;
             text-align: left;
+        }
+
+        .schedule-pg-button {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #25D366;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: all 0.25s ease;
+        }
+
+        .schedule-pg-button i {
+            font-size: 14px;
+        }
+
+        .schedule-pg-button:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+
+        .schedule-pg-button:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .pg-info-message {
+            display: none;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin: 6px 0 14px;
+            text-align: left;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(231, 76, 60, 0.04);
+            border-left: 2px solid #e74c3c;
         }
 
         html.dark-theme .schedule-card {
@@ -991,6 +1035,10 @@
                         <p class="schedule-day">Sexta-feira (PG)</p>
                         <p class="schedule-time">19h30</p>
                         <p class="schedule-text">Pequenos grupos: amizade, estudo e comunhão.</p>
+                        <a class="schedule-pg-button" href="https://wa.me/5511952940341" target="_blank" rel="noopener noreferrer" aria-label="Quero participar de um Pequeno Grupo pelo WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                            Quero participar de um PG
+                        </a>
                     </div>
                 </div>
 
@@ -1004,6 +1052,8 @@
                 </div>
             </div>
         </section>
+
+        <p id="pgInfoMessage" class="pg-info-message" aria-live="polite"></p>
 
         <p class="schedule-invite">
             Escolha um desses horários e venha viver esse momento com a gente aqui na IASD Vila Eduardo.
@@ -1344,6 +1394,26 @@ Conecte-se aos nossos canais e venha participar conosco.
                 if (nextCard) {
                     nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     nextCard.focus({ preventScroll: true });
+                }
+            });
+        }
+
+        // Mensagem específica ao clicar no PG
+        const pgCard = document.querySelector('.schedule-card[data-day="Sexta-feira (PG)"]');
+        const pgInfoEl = document.getElementById('pgInfoMessage');
+        if (pgCard && pgInfoEl) {
+            const pgMessage = 'Se ainda não existe um PG perto de você, entre em contato conosco pelo WhatsApp do Ministério dos Interessados logo abaixo.';
+
+            const showPgMessage = () => {
+                pgInfoEl.textContent = pgMessage;
+                pgInfoEl.style.display = 'block';
+            };
+
+            pgCard.addEventListener('click', showPgMessage);
+            pgCard.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    showPgMessage();
                 }
             });
         }
