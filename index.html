@@ -546,6 +546,7 @@
 
         .musica-icon { 
             color: #17c0eb;
+            font-size: 80px !important;
         }
 
         .musica-icon:hover {
@@ -705,6 +706,40 @@
         a.btn-secondary.musica {
             border-color: #17c0eb;
             color: #17c0eb;
+        }
+
+        /* Destaque especial para o botão principal do Projeto Som da Esperança */
+        .music-project-cta {
+            background: linear-gradient(135deg, #17c0eb, #0fa9d6) !important;
+            font-size: 16px !important;
+            padding: 14px 20px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 20px rgba(23, 192, 235, 0.35) !important;
+            position: relative;
+        }
+
+        .music-project-cta:hover {
+            box-shadow: 0 12px 28px rgba(23, 192, 235, 0.5) !important;
+            transform: translateY(-3px) scale(1.03) !important;
+        }
+
+        .music-project-cta::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, rgba(23, 192, 235, 0.3), rgba(15, 169, 214, 0.2));
+            border-radius: 8px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .music-project-cta:hover::after {
+            opacity: 1;
         }
 
         @media (max-width: 480px) {
@@ -1148,6 +1183,27 @@ Conecte-se aos nossos canais e venha participar conosco.
         <!-- SEÇÃO DE DEPARTAMENTOS -->
         <hr style="margin: 30px 0; border: none; border-top: 1px solid var(--button-border);">
 
+        <!-- PROJETO SOM DA ESPERANÇA - MINISTÉRIO DE MÚSICA -->
+        <div class="department-block">
+            <span class="department-icon musica-icon" aria-label="Ícone do ministério de música">
+                <i class="fas fa-music"></i>
+            </span>
+            <h3>🎵 Projeto Som da Esperança</h3>
+            <p>
+                Você ama música? Deseja louvar, adorar e tocar vidas através do seu talento? 
+                O Projeto Som da Esperança é um espaço para desenvolver dons, fortalecer a fé 
+                e impactar vidas por meio da música. Venha fazer parte desse ministério!
+            </p>
+            <div class="button-group">
+                <a class="btn-primary music-project-cta" href="https://docs.google.com/forms/d/e/1FAIpQLScjFRQxk7Um7dmExAbHUnxQKRTbGRZqGHrUypJ-QfggRBLfXg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" aria-label="Inscrever-se no Projeto Som da Esperança através do formulário">
+                    <i class="fas fa-pen-to-square"></i> Quero fazer parte 🎶
+                </a>
+                <a class="btn-secondary musica" href="https://wa.me/5587988688678" target="_blank" rel="noopener noreferrer" aria-label="Falar com o Diretor de Música pelo WhatsApp">
+                    <i class="fab fa-whatsapp"></i> Falar com o Diretor de Música
+                </a>
+            </div>
+        </div>
+
         <!-- MINISTÉRIO DOS INTERESSADOS -->
         <div class="department-block">
             <span class="department-icon interessados-icon">
@@ -1228,27 +1284,6 @@ Conecte-se aos nossos canais e venha participar conosco.
                 </a>
                 <a class="btn-secondary" href="https://www.instagram.com/cluberaizesdosertao" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i> Instagram – Raízes do Sertão
-                </a>
-            </div>
-        </div>
-
-        <!-- PROJETO SOM DA ESPERANÇA - MINISTÉRIO DE MÚSICA -->
-        <div class="department-block">
-            <span class="department-icon musica-icon" aria-label="Ícone do ministério de música">
-                <i class="fas fa-music"></i>
-            </span>
-            <h3>🎵 Projeto Som da Esperança</h3>
-            <p>
-                Você ama música? Deseja louvar, adorar e tocar vidas através do seu talento? 
-                O Projeto Som da Esperança é um espaço para desenvolver dons, fortalecer a fé 
-                e impactar vidas por meio da música. Venha fazer parte desse ministério!
-            </p>
-            <div class="button-group">
-                <a class="btn-secondary musica" href="https://wa.me/5587988688678" target="_blank" rel="noopener noreferrer" aria-label="Falar com o Diretor de Música pelo WhatsApp">
-                    <i class="fab fa-whatsapp"></i> Falar com o Diretor de Música
-                </a>
-                <a class="btn-primary musica" href="https://docs.google.com/forms/d/e/1FAIpQLScjFRQxk7Um7dmExAbHUnxQKRTbGRZqGHrUypJ-QfggRBLfXg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" aria-label="Inscrever-se no Projeto Som da Esperança através do formulário">
-                    <i class="fas fa-pen-to-square"></i> Quero fazer parte 🎶
                 </a>
             </div>
         </div>
