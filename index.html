@@ -544,6 +544,28 @@
             animation: glowIconGreen 1s ease-in-out;
         }
 
+        .musica-icon { 
+            color: #17c0eb;
+        }
+
+        .musica-icon:hover {
+            animation: bounceIcon 0.6s ease-in-out;
+            filter: brightness(1.2);
+        }
+
+        .musica-icon:hover i {
+            animation: glowIconMusic 1s ease-in-out;
+        }
+
+        @keyframes glowIconMusic {
+            0%, 100% {
+                text-shadow: none;
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(23, 192, 235, 0.6);
+            }
+        }
+
         .interessados-icon {
             color: #e74c3c;
         }
@@ -674,6 +696,15 @@
         a.btn-secondary.asa {
             border-color: #08ec5f;
             color: #08ec5f;
+        }
+
+        a.btn-primary.musica {
+            background: #17c0eb;
+        }
+
+        a.btn-secondary.musica {
+            border-color: #17c0eb;
+            color: #17c0eb;
         }
 
         @media (max-width: 480px) {
@@ -1197,6 +1228,27 @@ Conecte-se aos nossos canais e venha participar conosco.
                 </a>
                 <a class="btn-secondary" href="https://www.instagram.com/cluberaizesdosertao" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i> Instagram – Raízes do Sertão
+                </a>
+            </div>
+        </div>
+
+        <!-- PROJETO SOM DA ESPERANÇA - MINISTÉRIO DE MÚSICA -->
+        <div class="department-block">
+            <span class="department-icon musica-icon" aria-label="Ícone do ministério de música">
+                <i class="fas fa-music"></i>
+            </span>
+            <h3>🎵 Projeto Som da Esperança</h3>
+            <p>
+                Você ama música? Deseja louvar, adorar e tocar vidas através do seu talento? 
+                O Projeto Som da Esperança é um espaço para desenvolver dons, fortalecer a fé 
+                e impactar vidas por meio da música. Venha fazer parte desse ministério!
+            </p>
+            <div class="button-group">
+                <a class="btn-secondary musica" href="https://wa.me/5587988688678" target="_blank" rel="noopener noreferrer" aria-label="Falar com o Diretor de Música pelo WhatsApp">
+                    <i class="fab fa-whatsapp"></i> Falar com o Diretor de Música
+                </a>
+                <a class="btn-primary musica" href="https://docs.google.com/forms/d/e/1FAIpQLScjFRQxk7Um7dmExAbHUnxQKRTbGRZqGHrUypJ-QfggRBLfXg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" aria-label="Inscrever-se no Projeto Som da Esperança através do formulário">
+                    <i class="fas fa-pen-to-square"></i> Quero fazer parte 🎶
                 </a>
             </div>
         </div>
