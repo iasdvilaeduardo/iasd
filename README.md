@@ -1,35 +1,39 @@
 # IASD Vila Eduardo
 
-Landing page oficial da Igreja Adventista do Sétimo Dia — Vila Eduardo. O projeto é estático, leve e pode ser publicado em qualquer hospedagem que sirva arquivos HTML.
+Portal institucional estático, publicado no GitHub Pages em **https://iasdvilaeduardo.github.io/iasd/**. A hospedagem continua sendo apenas o GitHub Pages; conteúdo, login e imagens são fornecidos pelo Supabase.
 
-## Estrutura
+## Publicação
 
-```
-iasd/
-├── index.html          # conteúdo, semântica e metadados para busca
-├── assets/
-│   ├── css/site.css    # identidade visual, responsividade e temas
-│   └── js/site.js      # tema, modo sábado, verso e programação
-└── imagens locais       # logos dos ministérios e da IASD
-```
+Não altere o nome do repositório, a branch `main` nem o endereço acima. Como não há build, basta publicar os arquivos desta pasta no repositório. A URL dos QR Codes permanece a mesma.
 
-## Melhorias implementadas
+## Configuração inicial do Supabase
 
-- HTML semântico com link para pular ao conteúdo, foco visível e textos alternativos nas imagens.
-- Layout fluido para celular e desktop, com áreas de toque confortáveis e suporte a movimento reduzido.
-- Tema claro/escuro, modo sábado e preferência de tema persistente quando o navegador permite.
-- Metadados Open Graph, Twitter Card e dados estruturados `Church` para SEO.
-- Imagens locais e carregamento preguiçoso nos logos dos departamentos, reduzindo dependências remotas.
-- Contador da próxima programação atualizado a cada minuto, sem trabalho desnecessário a cada segundo.
+1. Crie um projeto em [Supabase](https://supabase.com) e, no **SQL Editor**, execute [supabase/schema.sql](supabase/schema.sql).
+2. Em **Authentication > URL Configuration**, adicione `https://iasdvilaeduardo.github.io/iasd/` como Site URL e Redirect URL.
+3. Em **Authentication > Providers**, deixe o login por e-mail habilitado.
+4. Copie a Project URL e a chave **anon/publishable** em `assets/js/config.js`. A chave pública pode ficar no site; nunca use a chave `service_role`.
+5. Crie o primeiro usuário em **Authentication > Users** e execute o `update` indicado no fim do SQL para torná-lo `admin`.
 
-## Uso local
+O SQL cria as tabelas `events`, `albums`, `photos` e `profiles`, o bucket público `gallery` e as políticas RLS. Visitantes só veem conteúdo publicado; editores administram eventos/álbuns/fotos; administradores também controlam perfis.
 
-Abra `index.html` no navegador. Não há processo de build, servidor ou dependência de backend.
+## Administração
 
-## Conteúdo a manter atualizado
+Acesse `/iasd/admin/`. Administradores e editores podem criar e excluir eventos e álbuns. Para adicionar fotos, use o Storage do Supabase até que o fluxo de upload do painel seja conectado ao projeto configurado; elas devem ser enviadas ao bucket `gallery` e registradas em `photos`.
 
-- Links de contato e redes sociais em `index.html`.
-- Horários da programação no bloco `events` em `assets/js/site.js` e na seção de horários do HTML.
-- Versos bíblicos nos arrays `regularVerses` e `sabbathVerses` em `assets/js/site.js`.
+## Google Analytics
 
-Antes de publicar, confira se o campo `url` dos dados estruturados no `index.html` corresponde ao endereço público definitivo do site.
+Crie uma propriedade GA4 e preencha `gaMeasurementId` em `assets/js/config.js` com algo como `G-XXXXXXXXXX`. O script só é carregado quando esse valor existe.
+
+## Identidade e conteúdo institucional
+
+- Logos e imagens atuais ficam na raiz do projeto.
+- Contatos, departamentos e programação semanal de referência permanecem em `index.html` e `assets/js/site.js`.
+- Agenda e galeria são administradas via Supabase depois da configuração.
+
+## Desenvolvimento local
+
+Abra `index.html` ou sirva esta pasta por um servidor estático. Não há Node, Firebase nem backend próprio.
+
+## Segurança
+
+Não comite chaves privadas. `.env` está ignorado. A proteção real está em RLS; teste o painel com uma conta visitante e uma conta de editor antes de publicar conteúdo.
