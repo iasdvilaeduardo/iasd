@@ -8,5 +8,5 @@
 window.IASD_CONFIG = {
   supabaseUrl: 'https://fejkqvpsdqvgbfwaydrw.supabase.co',
   supabaseAnonKey: 'sb_publishable_FRz0isRI_E78o3ZDRbEOjA_TvKo2bsv',
-  gaMeasurementId: ''
+  gaMeasurementId: 'G-EG67SVKSQ6'
 };
