@@ -1,86 +1,35 @@
-# IASD Vila Eduardo - Website
+# IASD Vila Eduardo
 
-Um site moderno e responsivo para a Igreja Adventista do Sétimo Dia (IASD) - Vila Eduardo, desenvolvido com HTML, CSS e JavaScript vanilla.
+Landing page oficial da Igreja Adventista do Sétimo Dia — Vila Eduardo. O projeto é estático, leve e pode ser publicado em qualquer hospedagem que sirva arquivos HTML.
 
-## 🌟 Recursos Principais
-
-### Interface e Experiência do Usuário
-- **Tema Escuro/Claro**: Alternância entre modos claro e escuro com preferência salva localmente
-- **Modo Sábado**: Tema especial ativado automaticamente às sextas-feiras após 18h até sábados às 18h
-- **Design Responsivo**: Totalmente adaptado para dispositivos móveis e desktop
-- **Animações Suaves**: Transições e animações CSS para melhor experiência visual
-- **Acessibilidade**: Respeita preferências de movimento reduzido
-
-### Conteúdo Dinâmico
-- **Mensagem de Boas-vindas Personalizada**: Saudação conforme hora e dia da semana
-- **Verso Bíblico Rotativo**: Exibe versos aleatórios ao carregar a página
-- **Links Sociais**: Conexão com Instagram, YouTube, WhatsApp e outras plataformas
-
-### Departamentos
-- 🏕️ **Clube de Desbravadores**: Para crianças e adolescentes maiores
-- 🎒 **Clube de Aventureiros**: Para crianças menores
-- ❤️ **Ação Solidária Adventista (ASA)**: Serviço social e comunitário
-- 🤝 **Ministério dos Interessados**: Acompanhamento de visitantes e novos membros
-
-## 📁 Estrutura do Projeto
+## Estrutura
 
 ```
 iasd/
-├── index.html          # Arquivo principal do site
-└── README.md           # Este arquivo
+├── index.html          # conteúdo, semântica e metadados para busca
+├── assets/
+│   ├── css/site.css    # identidade visual, responsividade e temas
+│   └── js/site.js      # tema, modo sábado, verso e programação
+└── imagens locais       # logos dos ministérios e da IASD
 ```
 
-## 🚀 Como Usar
+## Melhorias implementadas
 
-1. Abra o arquivo `index.html` em um navegador web
-2. O site é totalmente funcional sem necessidade de servidor
-3. Todos os links remetem para plataformas externas (redes sociais, WhatsApp, etc.)
+- HTML semântico com link para pular ao conteúdo, foco visível e textos alternativos nas imagens.
+- Layout fluido para celular e desktop, com áreas de toque confortáveis e suporte a movimento reduzido.
+- Tema claro/escuro, modo sábado e preferência de tema persistente quando o navegador permite.
+- Metadados Open Graph, Twitter Card e dados estruturados `Church` para SEO.
+- Imagens locais e carregamento preguiçoso nos logos dos departamentos, reduzindo dependências remotas.
+- Contador da próxima programação atualizado a cada minuto, sem trabalho desnecessário a cada segundo.
 
-## 🎨 Personalizações Disponíveis
+## Uso local
 
-### Cores e Temas
-As cores principais dos departamentos podem ser modificadas nas variáveis CSS:
-- Desbravadores: `#f85d04` (laranja)
-- Aventureiros: `#6a04f0` (roxo)
-- ASA: `#08ec5f` (verde)
-- Interessados: `#e74c3c` (vermelho)
+Abra `index.html` no navegador. Não há processo de build, servidor ou dependência de backend.
 
-### Versos Bíblicos
-Para adicionar novos versos, edite o array `verses` dentro da função `getRandomBibleVerse()` no script
+## Conteúdo a manter atualizado
 
-## 📱 Links de Contato
+- Links de contato e redes sociais em `index.html`.
+- Horários da programação no bloco `events` em `assets/js/site.js` e na seção de horários do HTML.
+- Versos bíblicos nos arrays `regularVerses` e `sabbathVerses` em `assets/js/site.js`.
 
-- **Instagram Oficial**: @iasdvilaeduardo
-- **Instagram Jovens**: @jovens_ve
-- **YouTube**: IASD Vila Eduardo
-- **WhatsApp Pastoral**: 85 98701-3938
-- **Localização**: Google Maps integrado
-
-## 🌙 Funcionalidades JavaScript
-
-- Detecção automática de tema (escuro/claro/sábado)
-- Animações ao scroll (Intersection Observer)
-- Efeito ripple em botões ao clicar
-- Mensagens dinâmicas baseadas em data/hora
-- Armazenamento local de preferências de tema
-
-## 🔧 Compatibilidade
-
-- Chrome/Edge (versão 88+)
-- Firefox (versão 85+)
-- Safari (versão 14+)
-- Navegadores móveis modernos
-
-## 📝 Notas
-
-- O site usa Font Awesome 6.5.0 para ícones
-- Todas as imagens são hospedadas no GitHub
-- O site é totalmente estático e não requer backend
-
-## 👨‍💻 Desenvolvido para
-
-Igreja Adventista do Sétimo Dia - Vila Eduardo
-
----
-
-**Última atualização**: janeiro de 2026
+Antes de publicar, confira se o campo `url` dos dados estruturados no `index.html` corresponde ao endereço público definitivo do site.
