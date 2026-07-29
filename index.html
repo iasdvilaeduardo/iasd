@@ -26,17 +26,27 @@
   <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Ativar modo escuro">
     <i class="fa-solid fa-moon" aria-hidden="true"></i><span class="theme-toggle-label">Tema</span>
   </button>
+  <nav class="site-nav" aria-label="Navegação principal">
+    <a href="#programacao">Programação</a>
+    <a href="#conecte-se">Contato</a>
+    <a href="#ministerios">Ministérios</a>
+  </nav>
 
   <main class="page-shell" id="conteudo">
-    <header class="hero">
+    <header class="hero" data-reveal>
+      <div class="hero-art" aria-hidden="true"><img src="20260115_155504_0000.png" alt="" width="640" height="640"></div>
       <img class="logo" src="Igreja_Adventista_Dia.svg.png" alt="Logo da Igreja Adventista do Sétimo Dia" width="290" height="106">
       <p class="eyebrow">Igreja Adventista do Sétimo Dia</p>
       <h1>IASD Vila Eduardo</h1>
       <p class="welcome-message" id="welcomeMessage">Que bom ter você aqui!</p>
       <blockquote class="bible-verse" id="bibleVerse">“Porque Deus amou o mundo de tal maneira...” <cite>João 3:16</cite></blockquote>
+      <div class="hero-actions" aria-label="Acessos rápidos">
+        <a class="hero-primary" href="#programacao"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Ver horários</a>
+        <a class="hero-secondary" href="https://maps.app.goo.gl/DUvuHEB5QrCCy7pg6" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Como chegar<span class="sr-only"> (abre em nova aba)</span></a>
+      </div>
     </header>
 
-    <section class="schedule-section" aria-labelledby="scheduleTitle">
+    <section class="schedule-section" id="programacao" aria-labelledby="scheduleTitle" data-reveal>
       <div class="section-heading">
         <p class="section-kicker">Nossa programação</p>
         <h2 id="scheduleTitle">Horários de culto e PG</h2>
@@ -59,7 +69,7 @@
       <p class="schedule-invite">Escolha um horário e venha viver esse momento com a gente.</p>
     </section>
 
-    <section class="channels-section" aria-labelledby="channelsTitle">
+    <section class="channels-section" id="conecte-se" aria-labelledby="channelsTitle" data-reveal>
       <div class="section-heading"><p class="section-kicker">Fique por perto</p><h2 id="channelsTitle">Conecte-se conosco</h2></div>
       <p>Venha conhecer a IASD Vila Eduardo e acompanhe nossos canais.</p>
       <nav class="link-list" aria-label="Canais e contatos da igreja">
@@ -73,7 +83,7 @@
       <div class="service-links" aria-label="Links para o aplicativo 7Me"><a href="https://play.google.com/store/apps/details?id=com.iatec.acms.me&pcampaignid=web_share" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-android" aria-hidden="true"></i> 7Me para Android</a><a href="https://apps.apple.com/br/app/7me/id1344775660" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-apple" aria-hidden="true"></i> 7Me para iPhone</a><a href="https://www.youtube.com/watch?v=TAvHXXeeRrU" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube" aria-hidden="true"></i> Como dizimar e ofertar</a></div>
     </section>
 
-    <section class="departments-section" aria-labelledby="departmentsTitle">
+    <section class="departments-section" id="ministerios" aria-labelledby="departmentsTitle" data-reveal>
       <div class="section-heading"><p class="section-kicker">Encontre seu lugar</p><h2 id="departmentsTitle">Ministérios e projetos</h2></div>
       <div class="department-list">
         <article class="department-block music"><div class="department-icon" aria-hidden="true"><i class="fa-solid fa-music"></i></div><h3>Projeto Som da Esperança</h3><p>Desenvolva seus dons, fortaleça a fé e toque vidas por meio da música.</p><div class="button-group"><a class="btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScjFRQxk7Um7dmExAbHUnxQKRTbGRZqGHrUypJ-QfggRBLfXg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Quero fazer parte <span class="sr-only">(abre em nova aba)</span></a><a class="btn-secondary" href="https://wa.me/5587988688678" target="_blank" rel="noopener noreferrer">Falar com a direção</a></div></article>

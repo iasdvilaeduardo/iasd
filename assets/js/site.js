@@ -1,5 +1,6 @@
 (() => {
   const root = document.documentElement;
+  root.classList.add('js-enabled');
   const themeToggle = document.querySelector('#themeToggle');
   const welcomeMessage = document.querySelector('#welcomeMessage');
   const bibleVerse = document.querySelector('#bibleVerse');
@@ -113,4 +114,17 @@
   prefersDark.addEventListener('change', ({ matches }) => {
     if (!getSavedTheme()) applyTheme(matches ? 'dark' : 'light');
   });
+
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach((element) => revealObserver.observe(element));
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach((element) => element.classList.add('is-visible'));
+  }
 })();
