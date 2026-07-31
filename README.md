@@ -20,6 +20,16 @@ O SQL cria as tabelas `events`, `albums`, `photos` e `profiles`, o bucket públi
 
 Acesse `/iasd/admin/`. Administradores e editores podem criar e excluir eventos e álbuns. Para adicionar fotos, use o Storage do Supabase até que o fluxo de upload do painel seja conectado ao projeto configurado; elas devem ser enviadas ao bucket `gallery` e registradas em `photos`.
 
+### Otimização da galeria
+
+Após atualizar o site, execute uma vez [supabase/migrations/20260731_gallery_variants.sql](supabase/migrations/20260731_gallery_variants.sql) no SQL Editor. Novos envios pelo painel passam a gerar três arquivos no Storage:
+
+- `thumb/`: WebP de até 400 px, para miniaturas;
+- `display/`: WebP de até 1600 px, para o lightbox;
+- `original/`: arquivo enviado sem alteração, disponível somente no botão de download.
+
+Fotos anteriores continuam publicadas. Para receber versões otimizadas, envie-as novamente pelo painel.
+
 ## Google Analytics
 
 Crie uma propriedade GA4 e preencha `gaMeasurementId` em `assets/js/config.js` com algo como `G-XXXXXXXXXX`. O script só é carregado quando esse valor existe.

@@ -20,7 +20,8 @@ create table public.albums (
 );
 create table public.photos (
   id uuid primary key default gen_random_uuid(), album_id uuid not null references public.albums(id) on delete cascade,
-  storage_path text not null unique, alt_text text, position integer not null default 0, created_at timestamptz not null default now()
+  storage_path text not null unique, thumb_path text, display_path text, original_path text,
+  alt_text text, position integer not null default 0, created_at timestamptz not null default now()
 );
 
 create or replace function public.is_editor() returns boolean language sql stable security definer set search_path = public as $$
@@ -43,7 +44,7 @@ create policy "editors manage albums" on public.albums for all using (public.is_
 create policy "photos in published albums are public" on public.photos for select using (exists(select 1 from public.albums where albums.id=photos.album_id and (albums.published or public.is_editor())));
 create policy "editors manage photos" on public.photos for all using (public.is_editor()) with check (public.is_editor());
 
-insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types) values ('gallery','gallery',true,10485760,array['image/jpeg','image/png','image/webp']) on conflict (id) do nothing;
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types) values ('gallery','gallery',true,52428800,array['image/jpeg','image/png','image/webp']) on conflict (id) do nothing;
 create policy "public reads gallery files" on storage.objects for select using (bucket_id='gallery');
 create policy "editors upload gallery files" on storage.objects for insert to authenticated with check (bucket_id='gallery' and public.is_editor());
 create policy "editors update gallery files" on storage.objects for update to authenticated using (bucket_id='gallery' and public.is_editor());

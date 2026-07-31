@@ -14,6 +14,11 @@ export function storageUrl(path) {
   return supabase.storage.from('gallery').getPublicUrl(path).data.publicUrl;
 }
 
+export function storageDownloadUrl(path) {
+  if (!path || !supabase) return '';
+  return supabase.storage.from('gallery').getPublicUrl(path, { download: true }).data.publicUrl;
+}
+
 export function escapeHtml(value = '') {
   return String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -28,4 +33,3 @@ export function formatDate(value, options = { dateStyle: 'medium' }) {
 export function formatDateTime(value) {
   return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
 }
-

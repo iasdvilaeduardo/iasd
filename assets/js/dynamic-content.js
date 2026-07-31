@@ -8,12 +8,12 @@ function emptyState(container, text) {
 }
 
 function eventCard(event) {
-  const image = event.image_path ? `<img src="${storageUrl(event.image_path)}" alt="" loading="lazy">` : '';
+  const image = event.image_path ? `<img src="${storageUrl(event.image_path)}" alt="" loading="lazy" decoding="async">` : '';
   return `<article class="event-card">${image}<div><p class="card-kicker">${escapeHtml(event.department || 'Igreja')}</p><h3>${escapeHtml(event.title)}</h3><p class="event-meta"><time datetime="${event.starts_at}">${formatDateTime(event.starts_at)}</time>${event.location ? ` · ${escapeHtml(event.location)}` : ''}</p><p>${escapeHtml(event.description || '')}</p></div></article>`;
 }
 
 function albumCard(album) {
-  const cover = album.cover_path ? `<img src="${storageUrl(album.cover_path)}" alt="Capa do álbum ${escapeHtml(album.title)}" loading="lazy">` : '<div class="album-placeholder" aria-hidden="true">📷</div>';
+  const cover = album.cover_path ? `<img src="${storageUrl(album.cover_path)}" alt="Capa do álbum ${escapeHtml(album.title)}" loading="lazy" decoding="async">` : '<div class="album-placeholder" aria-hidden="true">📷</div>';
   return `<a class="album-card" href="gallery.html#album-${album.id}">${cover}<div><p class="card-kicker">${album.event_date ? new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium' }).format(new Date(`${album.event_date}T00:00:00`)) : 'Galeria'}</p><h3>${escapeHtml(album.title)}</h3><p>${escapeHtml(album.description || 'Veja as fotos deste momento especial.')}</p></div></a>`;
 }
 
@@ -34,4 +34,3 @@ async function loadContent() {
   else albumList.innerHTML = albums?.length ? albums.map(albumCard).join('') : '<p class="empty-state">Ainda não há álbuns publicados.</p>';
 }
 loadContent();
-
