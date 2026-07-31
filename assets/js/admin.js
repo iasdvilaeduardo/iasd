@@ -7,25 +7,50 @@ const status = (message) => { $('#adminNotice').textContent = message; };
 if (!isSupabaseConfigured) {
   $('#loginView').innerHTML = '<h1>Configuração necessária</h1><p>Preencha <code>assets/js/config.js</code> com a URL e a chave pública do Supabase.</p>';
 } else {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) showDashboard(session.user);
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      await supabase.auth.signOut({ scope: 'local' });
+      $('.form-status').textContent = 'Sua sessao expirou. Entre novamente para continuar.';
+    } else if (session) {
+      await showDashboard(session.user);
+    }
+  } catch {
+    await supabase.auth.signOut({ scope: 'local' });
+    $('.form-status').textContent = 'Nao foi possivel recuperar a sessao anterior. Entre novamente.';
+  }
   $('#loginForm').addEventListener('submit', async (event) => {
     event.preventDefault(); const form = new FormData(event.currentTarget);
+    const formStatus = $('.form-status');
+    formStatus.textContent = 'Entrando...';
+    try {
     const { error } = await supabase.auth.signInWithPassword({ email: form.get('email'), password: form.get('password') });
     $('.form-status').textContent = error ? 'Não foi possível entrar. Verifique seus dados.' : '';
     if (!error) location.reload();
+    } catch {
+      formStatus.textContent = 'Falha de conexao. Confira sua internet e tente novamente.';
+    }
   });
   $('#signOut').onclick = async () => { await supabase.auth.signOut(); location.reload(); };
 }
 
 async function showDashboard(user) {
   $('#loginView').hidden = true; $('#dashboardView').hidden = false;
-  const { data: profile } = await supabase.from('profiles').select('role,display_name').eq('id', user.id).single();
+  const { data: profile, error: profileError } = await supabase.from('profiles').select('role,display_name').eq('id', user.id).single();
+  if (profileError) {
+    $('#dashboardView').hidden = true;
+    $('#loginView').hidden = false;
+    $('.form-status').textContent = 'Nao foi possivel validar sua permissao. Atualize a pagina e tente novamente.';
+    return;
+  }
   if (!profile || profile.role === 'visitor') { $('#dashboardView').hidden = true; $('#loginView').innerHTML = '<h1>Acesso não autorizado</h1><p>Sua conta não possui permissão editorial.</p>'; return; }
   $('#adminIdentity').textContent = `${profile.display_name || user.email} · ${profile.role === 'admin' ? 'Administrador' : 'Editor'}`;
 
   const refresh = async () => {
-    const [{ data: events }, { data: albums }] = await Promise.all([supabase.from('events').select('*').order('starts_at', { ascending: false }), supabase.from('albums').select('*').order('event_date', { ascending: false })]);
+    const [eventResult, albumResult] = await Promise.all([supabase.from('events').select('*').order('starts_at', { ascending: false }), supabase.from('albums').select('*').order('event_date', { ascending: false })]);
+    if (eventResult.error || albumResult.error) throw new Error('Falha ao carregar o conteudo.');
+    const events = eventResult.data || [];
+    const albums = albumResult.data || [];
     $('#eventAdminList').innerHTML = events.length ? events.map((item) => `<div><strong>${escapeHtml(item.title)}</strong><span>${formatDateTime(item.starts_at)}</span><button data-delete-event="${item.id}">Excluir</button></div>`).join('') : '<p>Nenhum evento.</p>';
     $('#albumAdminList').innerHTML = albums.length ? albums.map((item) => `<div><strong>${escapeHtml(item.title)}</strong><span>${item.event_date || ''}</span><button type="button" data-manage-album="${item.id}">Fotos</button><button data-delete-album="${item.id}">Excluir</button></div>`).join('') : '<p>Nenhum álbum.</p>';
     $('#photoAlbum').innerHTML = albums.length ? albums.map((item) => `<option value="${item.id}">${escapeHtml(item.title)}</option>`).join('') : '<option value="">Crie um álbum primeiro</option>';
@@ -36,7 +61,11 @@ async function showDashboard(user) {
     $('#photoAdminList').innerHTML = error ? '<p>Não foi possível carregar as fotos.</p>' : photos.length ? photos.map((photo) => `<article><img src="${storageUrl(photo.thumb_path || photo.storage_path)}" alt="${escapeHtml(photo.alt_text || '')}" loading="lazy" decoding="async"><button type="button" data-delete-photo="${photo.id}" data-paths="${escapeHtml(JSON.stringify([photo.storage_path, photo.thumb_path, photo.display_path, photo.original_path].filter(Boolean)))}" data-album="${albumId}">Remover foto</button></article>`).join('') : '<p>Este álbum ainda não tem fotos.</p>';
     $('#photoManager').scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  await refresh();
+  try {
+    await refresh();
+  } catch {
+    status('Nao foi possivel carregar os eventos e albuns agora. Atualize a pagina e tente novamente.');
+  }
 
   $('#eventForm').addEventListener('submit', async (event) => { event.preventDefault(); const form = new FormData(event.currentTarget); const { error } = await supabase.from('events').insert({ title: form.get('title'), description: form.get('description'), starts_at: new Date(form.get('starts_at')).toISOString(), location: form.get('location'), department: form.get('department'), published: form.get('published') === 'on' }); status(error ? 'Erro ao salvar evento.' : 'Evento salvo.'); if (!error) { event.currentTarget.reset(); refresh(); } });
   $('#albumForm').addEventListener('submit', async (event) => { event.preventDefault(); const form = new FormData(event.currentTarget); const { error } = await supabase.from('albums').insert({ title: form.get('title'), description: form.get('description'), event_date: form.get('event_date') || null, published: form.get('published') === 'on' }); status(error ? 'Erro ao criar álbum.' : 'Álbum criado. Agora selecione-o para enviar fotos.'); if (!error) { event.currentTarget.reset(); refresh(); } });
