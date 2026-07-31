@@ -5,6 +5,10 @@
   const welcomeMessage = document.querySelector('#welcomeMessage');
   const bibleVerse = document.querySelector('#bibleVerse');
   const countdown = document.querySelector('#nextEventCountdown');
+  const menuToggle = document.querySelector('#menuToggle');
+  const mainNav = document.querySelector('#mainNav');
+  const siteHeader = document.querySelector('#siteHeader');
+  const currentYear = document.querySelector('#currentYear');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
   let timer;
 
@@ -114,6 +118,26 @@
   prefersDark.addEventListener('change', ({ matches }) => {
     if (!getSavedTheme()) applyTheme(matches ? 'dark' : 'light');
   });
+
+  function syncHeader() {
+    siteHeader?.classList.toggle('is-scrolled', window.scrollY > 16);
+  }
+
+  menuToggle?.addEventListener('click', () => {
+    const open = mainNav?.classList.toggle('is-open');
+    menuToggle.setAttribute('aria-expanded', String(Boolean(open)));
+    menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    const icon = menuToggle.querySelector('i');
+    if (icon) icon.className = `fa-solid ${open ? 'fa-xmark' : 'fa-bars'}`;
+  });
+  mainNav?.addEventListener('click', (event) => {
+    if (!(event.target instanceof HTMLAnchorElement)) return;
+    mainNav.classList.remove('is-open');
+    menuToggle?.setAttribute('aria-expanded', 'false');
+  });
+  window.addEventListener('scroll', syncHeader, { passive: true });
+  syncHeader();
+  if (currentYear) currentYear.textContent = String(new Date().getFullYear());
 
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
