@@ -89,3 +89,47 @@ body { background: var(--cream); font-family: var(--text-sans); }.site-header { 
 .site-footer { padding: 3.5rem max(1rem, calc((100% - 1100px) / 2)) 1.25rem; color: rgb(255 255 255 / .72); background: #061729; }.site-footer .brand { color: #fff; }.site-footer .brand img { border: 1px solid rgb(255 255 255 / .3); }.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }.footer-grid h2 { margin-bottom: .75rem; color: #fff; font-family: var(--text-sans); font-size: .92rem; }.footer-grid a { display: block; margin-bottom: .45rem; color: rgb(255 255 255 / .72); font-size: .9rem; text-decoration: none; }.footer-bottom { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .14); font-size: .82rem; }.footer-bottom p { margin-bottom: 0; }
 @media (max-width: 900px) { .main-nav { gap: .75rem; }.visit-button { display: none; }.schedules .schedule-grid, .content-grid, .link-list, .department-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }.visit-section { grid-template-columns: 1fr; }.visit-photo img { min-height: 19rem; max-height: 25rem; }.giving-section { display: grid; }.next-meeting { grid-template-columns: auto 1fr; }.meeting-actions { grid-column: 1 / -1; justify-content: start; } }
 @media (max-width: 640px) { .site-header { gap: .55rem; min-height: 4.4rem; padding-inline: 1rem; }.menu-toggle { display: inline-grid; place-items: center; }.main-nav { position: absolute; top: calc(100% + .4rem); left: 1rem; right: 1rem; display: none; padding: .75rem; border: 1px solid rgb(255 255 255 / .14); border-radius: .9rem; background: #09233f; box-shadow: 0 14px 30px rgb(0 0 0 / .22); }.main-nav.is-open { display: grid; }.main-nav a { padding: .55rem; }.theme-toggle { margin-left: auto; }.theme-toggle-label { display: none; }.hero { min-height: 43rem; padding: 6rem 1.25rem 5rem; }.hero h1 { font-size: clamp(2.8rem, 14vw, 4.1rem); }.hero-actions { align-items: stretch; }.hero-actions a { width: 100%; }.next-meeting { grid-template-columns: 1fr; margin-top: -1.5rem; }.meeting-icon { width: 3rem; }.schedules .schedule-grid, .content-grid, .link-list, .department-list { grid-template-columns: 1fr; }.split-heading, .footer-bottom { display: grid; }.section-wrap { width: min(100% - 1.5rem, 1100px); }.connect-section { padding: 1.25rem; }.visit-section { width: min(100% - 1.5rem, 1100px); }.visit-copy { padding: 2rem 1.4rem; }.footer-grid { grid-template-columns: 1fr; }.giving-section { width: min(100% - 1.5rem, 1100px); }.page-shell { width: min(100% - 1rem, 820px); } }
+
+/* Temas com contraste revisado: todas as superfícies usam a mesma escala de cores. */
+:root {
+  --bg: #edf2f5; --surface: #fffdf9; --surface-alt: #f6f1e8; --text: #142536;
+  --muted: #485b6a; --line: #c8d4dc; --accent: #0d6098; --accent-dark: #084a78;
+  --focus: #075f9e; --navy: #08233f; --navy-2: #0d3d66; --gold: #c89542;
+  --cream: #edf2f5; --header-bg: rgb(8 35 63 / .96); --section-tint: #e5eef2;
+  --card-bg: #fffdf9; --card-hover: #f8fbfc; --footer-bg: #061a2d;
+  --shadow: 0 18px 45px rgb(20 37 54 / .14); --soft-shadow: 0 8px 22px rgb(20 37 54 / .10);
+  color-scheme: light;
+}
+html.dark-theme {
+  --bg: #0b1723; --surface: #12263a; --surface-alt: #193149; --text: #f4f7fa;
+  --muted: #c0cfdb; --line: #38536a; --accent: #74c9ff; --accent-dark: #b7e5ff;
+  --focus: #9bdbff; --navy: #071522; --navy-2: #173e61; --gold: #f0c36c;
+  --cream: #0b1723; --header-bg: rgb(5 16 28 / .97); --section-tint: #102337;
+  --card-bg: #132b40; --card-hover: #19344c; --footer-bg: #050f19;
+  --shadow: 0 18px 45px rgb(0 0 0 / .38); --soft-shadow: 0 8px 22px rgb(0 0 0 / .28);
+  color-scheme: dark;
+}
+body { background: radial-gradient(circle at 50% -20%, rgb(255 255 255 / .36), transparent 32%), var(--bg); }
+html.dark-theme body { background: radial-gradient(circle at 50% -20%, rgb(116 201 255 / .08), transparent 32%), var(--bg); }
+.site-header, .site-header.is-scrolled { background: var(--header-bg); }
+.theme-toggle { color: #fff; border-color: rgb(255 255 255 / .32); background: rgb(255 255 255 / .12); }
+.schedule-card, .department-block, .link { border-color: var(--line); background: var(--card-bg) !important; }
+.schedule-card:hover, .department-block:hover, .link:hover { background: var(--card-hover) !important; }
+.schedule-card { border-color: var(--line); }
+.schedule-icon { color: var(--accent-dark); background: var(--surface-alt); }
+.connect-section { background: var(--section-tint); }
+.giving-section { border-color: color-mix(in srgb, var(--gold), var(--line) 50%); background: var(--surface-alt); }
+.next-meeting { border-color: color-mix(in srgb, var(--gold), var(--line) 45%); background: var(--surface); }
+.text-link, .inline-action { color: var(--accent-dark); }
+.inline-action { color: #fff; background: var(--navy-2); }
+.department-age { margin-top: -.05rem; padding-left: .7rem; border-left: 3px solid var(--gold); color: var(--text) !important; font-size: .9rem; }
+.child-ministry { border-color: color-mix(in srgb, #e71d27, var(--line) 55%); }
+.child-ministry-logo { width: 4rem; height: 4rem; padding: .15rem; border-radius: .8rem; border: 2px solid #e71d27; background: #2d1a70; }
+.child-ministry .btn-primary { background: #2d1a70; }
+.child-ministry .btn-primary:hover { background: #24135b; }
+html.dark-theme .child-ministry .btn-primary { color: #fff; background: #7d67d7; }
+html.dark-theme .child-ministry .btn-primary:hover { background: #967fea; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+html.dark-theme .main-nav { background: #0c2034; }
+html.dark-theme .visit-section { background: #0a1d30; }
+html.dark-theme .prayer-section { background: radial-gradient(circle at 75% 0, rgb(240 195 108 / .24), transparent 35%), linear-gradient(125deg, #071522, #123959); }
